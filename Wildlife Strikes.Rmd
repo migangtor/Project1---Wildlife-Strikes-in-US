@@ -1,0 +1,36 @@
+---
+title: "Wildlife strikes"
+author: "Miguel"
+date: "7/29/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggthemes)
+wildlife <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-23/wildlife_impacts.csv")
+view(wildlife)
+```
+
+## Attempt at data visualization 
+
+No indepth analysis is carried out, just plain basic data visualization is documented here. This script would like to attempt the following question:
+
+- which species have the highest reported kills?
+- How does bird kills evolved over time?
+- At what time of the day is the kills mostly occuring?
+
+
+```{r echo= FALSE, include=FALSE}
+reports<-wildlife %>%
+  count(species)%>%
+  arrange(desc(n))
+reports
+unknown_birds<-wildlife %>% 
+  count(species) %>% 
+  filter(!str_detect(species, "Unknown")) %>% 
+  summarise(total = mean(n))
+unknown_birds
+
+```
